@@ -1,5 +1,6 @@
 package backend.estoque.produtos;
 
+import backend.estoque.saida.DadosRetirarProduto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,5 +31,7 @@ public class Produto {
         this.quantidade = dados.quantidade();
         this.valorUnitario = dados.valorUnitario();
     }
+
+
 
 }

@@ -1,6 +1,5 @@
 package backend.estoque.controller;
 
-import backend.estoque.entrada.DadosListagemEntradas;
 import backend.estoque.produtos.DadosCriarProdutos;
 import backend.estoque.produtos.DadosListagemProdutos;
 import backend.estoque.produtos.Produto;
@@ -22,14 +21,24 @@ public class produtosController {
 
     @PostMapping
     @Transactional
-    @Tag(name = "Criar Produto", description = "Adicionar quantidades de itens já existentes")
+    @Tag(name = "Criar Produto", description = "Criar produto no banco de dados.")
     public void CriarProduto(@RequestBody DadosCriarProdutos dados ){
+
         repository.save(new Produto(dados));
     }
 
     @GetMapping
+    @Tag(name = "Listar produtos", description = "Listar os produtos existentes.")
     public Page<DadosListagemProdutos> listarProdutos(@PageableDefault(size=6, sort = {"id"}) Pageable paginacao){
         return repository.findAll(paginacao)
-                .map(DadosListagemEntradas:: new);
+                .map(DadosListagemProdutos:: new);
     }
+
+    @GetMapping("/{idProduto}")
+    @Tag(name = "Listar Produto Especifico", description = "Listar um produto especifico com base no id")
+    public Page<DadosListagemProdutos> listarProdutoEspecifico(@PathVariable Long idProduto, @PageableDefault(size=6, sort = {"id"}) Pageable paginacao){
+        return repository.findByIdProduto(idProduto, paginacao)
+                .map(DadosListagemProdutos:: new);
+    }
+
 }

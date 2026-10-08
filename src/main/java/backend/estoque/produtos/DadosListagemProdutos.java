@@ -1,7 +1,5 @@
 package backend.estoque.produtos;
 
-import backend.estoque.entrada.Entrada;
-
 public record DadosListagemProdutos(
         Long id,
         String nome,
